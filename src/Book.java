@@ -14,21 +14,36 @@ import java.util.Objects;
 public class Book implements Comparable<Book> {
   private final String author;
   private final String title;
+
   private final int pages;
+
   public String getAuthor() {
     return author;
   }
+
   public String getTitle() {
     return title;
   }
+
   public int getPages() {
     return pages;
   }
+
   public Book(String author, String title, int pages) {
+    if (author.equals("")) {
+      throw new IllegalArgumentException("Field author is empty");
+    }
     this.author = author;
+    if (title.equals("")) {
+      throw new IllegalArgumentException("Field title is empty");
+    }
     this.title = title;
+    if (pages < 0) {
+      throw new IllegalArgumentException("Negative pages: " + pages);
+    }
     this.pages = pages;
   }
+
 
   @Override
   public String toString() {
@@ -37,9 +52,9 @@ public class Book implements Comparable<Book> {
 
   @Override
   public int compareTo(Book other) {
-    if(!author.equals(other.author)){
-        return author.compareTo(other.author);
-      }
+    if (!author.equals(other.author)) {
+      return author.compareTo(other.author);
+    }
     return title.compareTo(other.title);
   }
 
@@ -52,7 +67,8 @@ public class Book implements Comparable<Book> {
       return false;
     }
     Book book = (Book) o;
-    return pages == book.pages && Objects.equals(author, book.author) && Objects.equals(title, book.title);
+    return pages == book.pages && Objects.equals(author, book.author)
+        && Objects.equals(title, book.title);
   }
 
   @Override
